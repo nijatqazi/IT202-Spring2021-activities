@@ -30,9 +30,10 @@
       // your code here
 
       //1
-      let div1 = document.createElement("div1");
+      let div1 = document.getElementById("div1");
       div1.innerText = "UIC";
-      document.querySelector("#div1").appendChild(div1);
+      
+
       
       //2
       document.getElementById("div1").style.color = "#D50032";
@@ -50,37 +51,35 @@
 
 
       //6
-      let div3 = document.createElement("div3");
-      document.querySelector("#div3").remove();
+      let div3 = document.getElementById("div3");
+      div3.remove();
 
-     //  //7
-      
-  	  document.title = "nijatq";
+     //7
+      let myTitle = document.createElement("myTitle")
+  	  myTitle.innerText = "nijatq";
 
 
-     //  //8 
+     //8 
       let newList = document.createElement("li")
    	  
    	  
-     //  //9
-     newList.innerText = "Computer Science";
+     //9
+      newList.innerText = "Computer Science";
 
-     //  //10
-     document.querySelector("ul").appendChild(newList);
+     //10
+      document.querySelector("ul").appendChild(newList);
 
-     //  //11
-       document.querySelector("li").classList.remove("big");
+     //11
+      document.querySelector("li").classList.remove("big");
 
       //12
       newList.classList.add("blue");
 
       //13
-      let makeClone = document.querySelector("img");
-      makeClone.cloneNode(true);
-
+      let creatClone = document.querySelector("img").cloneNode(true);
 
       //14
-      document.getElementsBy("div1").appendChild(makeClone);
+      document.getElementById("div1").appendChild(creatClone);
 
 
 
