@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>repl.it</title>
+    <title>lab8</title>
 
 
   </head>
@@ -22,6 +22,24 @@
       gameObjs.push( {x: 275, y: 275, radius: 25, color: "green" } )
       gameObjs.push( {x: 200, y: 300, radius: 25, color: "blue" } )
 
+      // function to generate a random color (A tichnique got from stock overflow)
+      let randomColor = () => {
+        let numLetters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+          color += numLetters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+      }
+      
+      // loop to create 25 additional gameObjects with random x, y and color values; then push them to the gameObjs
+      for (let i = 0; i < 25; i++) {
+        let radius = 25;
+        let x = radius + (Math.random() * (c.width - (2 * radius)));
+        let y = radius + (Math.random() * (c.height - (2 * radius)));
+        let color = randomColor();
+        gameObjs.push({x:x, y:y, radius: radius, color:color});
+      }
 
       gameObjs.forEach( (obj) => {
         ctx.beginPath()
@@ -32,6 +50,8 @@
       });
 
       // create a function named areColliding that accepts two objects and returns a boolen based on collision
+      // used the following link for help
+      // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 
       let areColliding = (circle1, circle2) => {
         let dx = circle1.x - circle2.x;
@@ -43,10 +63,8 @@
         }
         return false; // collision not detected
       }
-      // https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection
 
       //fuction for drawing a circle and a boarder arond it 
-
       let redrawCircle = (obj, border, borderColor) => {
         ctx.beginPath();
         ctx.arc(obj.x, obj.y, obj.radius, 0, 2*Math.PI);
@@ -57,7 +75,6 @@
         ctx.fill();
         ctx.stroke();
       }
-
 
       // loop the objects to compare every pair
       //    and if a pair are colliding, redraw them
@@ -77,9 +94,6 @@
           }
         });
       });
-
-      // once you get that working, update the code above to create 25 additional gameObjects with random x, y and color values; and push them to the array before the drawing and comparison
-
 
     </script>
   </body>
