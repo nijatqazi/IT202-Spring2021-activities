@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Speech Synthesis</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+  </head>
+  
+  <body>
+
+    <div class="jumbotron">
+      <h1 class="display-4">Welcome, to Speech Synthesizer</h1>
+      
+      <hr class="my-4">
+      
+      <form id="data">
+      <!-- textarea for user input -->
+      <label for="userInput">Enter Text:</label><br>
+      <textarea form="data" id="userInput" name="userInput" rows="2" cols="50"></textarea>
+      <br><br>
+
+      <!-- selecting the right language from the drop down menue -->
+      <label for="Languages">Choose a language:</label><br>
+      <select name="Languages" id="Languages">
+        <option></option>
+      </select>
+      <br><br>
+      
+      <!-- click the button to speak -->
+      <p class="lead">
+        <a id = "Speak" type = "submit" class="btn btn-primary btn-lg" role="button" disabled>Speak</a>
+        <!-- <button id = "Speak" type="submit" class="btn btn-dark" disabled="">SPEAK</button> -->
+      </p>
+      
+    </form>
+    </div>
+
+    <script>
+
+      // get the available languages 
+      
+      let synth = window.speechSynthesis;
+      let inputForm = document.querySelector('#data');
+      let inputTxt = document.querySelector('#userInput');
+      let lang = document.querySelector('#Languages');
+
+      let voices = [];
+      
+      // populate the select control with the options
+      let populateVoiceList = () => {
+        voices = synth.getVoices();
+
+        for (let i = 0; i < voices.length ; i++) {
+          let option = document.createElement('option');
+          option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+
+          if (voices[i].default) {
+            option.textContent += ' -- DEFAULT';
+          }
+
+          option.value = i;
+          lang.appendChild(option);
+        }
+      }
+
+      populateVoiceList();
+      if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoiceList;
+      }
+
+      lang.addEventListener('change', (event) => {
+        // speak
+        if (lang.value != "") {
+            speakBtn.disabled = false;
+        } else {
+          speakBtn.disabled = true;
+        }
+      });
+
+      let speakBtn = document.querySelector('#Speak');
+
+      speakBtn.addEventListener('click', (event) => {
+        event.preventDefault();
+
+        let utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+        utterThis.voice = voices[lang.value];
+        synth.speak(utterThis);
+        inputTxt.blur();
+      });
+
+    </script>
+  </body>
+</html>
